@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050300">
+<title>Nuestro pequeño universo</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;min-height:100%;background:#030200;color:#fff;overflow-x:hidden}
+body{font-family:Georgia,serif}
+.hero{position:relative;min-height:100svh;overflow:hidden;background:#050300}
+.bg{position:absolute;inset:-4%;background:url("galaxia_fondo.png") center 48%/cover no-repeat;transform:scale(1.04);animation:drift 14s ease-in-out infinite alternate}
+.bg:after{content:"";position:absolute;inset:0;background:linear-gradient(#0004,#0000 25%,#0001 65%,#0008)}
+@keyframes drift{to{transform:scale(1.11) translateY(-1.5%)}}
+.stars,.petals{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.star{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff8c4;box-shadow:0 0 8px #ffd86a;animation:twinkle var(--d) infinite alternate}
+@keyframes twinkle{from{opacity:.2;transform:scale(.6)}to{opacity:1;transform:scale(1.7)}}
+.petal{position:absolute;top:-12%;font-size:var(--s);filter:drop-shadow(0 0 7px #ffbd28);animation:fall var(--d) linear infinite;animation-delay:var(--delay);opacity:.88}
+@keyframes fall{to{transform:translate(var(--x),115svh) rotate(540deg)}}
+.overlay{position:relative;z-index:2;min-height:100svh;display:flex;flex-direction:column;align-items:center;text-align:center;padding:calc(env(safe-area-inset-top) + 42px) 20px calc(env(safe-area-inset-bottom) + 26px)}
+.kicker{letter-spacing:5px;font:700 10px Arial,sans-serif;color:#fff0a7;text-shadow:0 0 10px #d6a400}
+h1{font-weight:400;font-size:clamp(48px,13vw,84px);margin:13px 0 5px;color:#fff6bd;text-shadow:0 0 10px #fff,0 0 24px #ffcf39,0 0 55px #ff9f00}
+.sub{max-width:430px;font-size:clamp(15px,4vw,20px);line-height:1.45;color:#fff5d8;text-shadow:0 2px 8px #000}
+.spacer{flex:1}
+.glass{width:min(92%,520px);padding:18px 20px;border:1px solid #ffe27388;border-radius:24px;background:#160d0077;backdrop-filter:blur(8px);box-shadow:0 0 30px #ffbd2928}
+.glass strong{display:block;font-size:clamp(22px,6vw,34px);font-weight:400;color:#fff5bf;text-shadow:0 0 14px #ffc83c}
+.glass p{margin:7px 0 0;font:14px/1.5 Arial,sans-serif;color:#fff2d1}
+button{margin-top:16px;border:1px solid #ffe477;border-radius:999px;padding:14px 30px;font:800 16px Arial,sans-serif;color:#fff8d4;background:#6a4500aa;box-shadow:inset 0 0 20px #ffd85833,0 0 22px #ffbd3d55;backdrop-filter:blur(8px)}
+button:active{transform:scale(.97)}
+#message{position:fixed;inset:0;z-index:8;display:grid;place-items:center;padding:25px;background:#050300dd;backdrop-filter:blur(12px);opacity:0;visibility:hidden;transition:.6s}
+#message.show{opacity:1;visibility:visible}
+.letter{max-width:500px;padding:30px 25px;border:1px solid #ffe07477;border-radius:28px;background:#160d00dd;box-shadow:0 0 60px #ffb80033;text-align:center}
+.letter .icon{font-size:54px}.letter h2{font-size:clamp(31px,9vw,52px);font-weight:400;margin:8px;color:#fff2aa;text-shadow:0 0 18px #ffc400}
+.letter p{font:16px/1.65 Arial,sans-serif;color:#fff5dc}
+.close{margin-top:20px}
+.burst{position:fixed;z-index:20;pointer-events:none;font-size:22px;animation:burst 1.4s ease-out forwards}
+@keyframes burst{to{transform:translate(var(--x),var(--y)) rotate(var(--r));opacity:0}}
+</style>
+</head>
+<body>
+<section class="hero">
+  <div class="bg"></div>
+  <div class="stars" id="stars"></div>
+  <div class="petals" id="petals"></div>
+  <div class="overlay">
+    <div class="kicker">NUESTRO PEQUEÑO UNIVERSO</div>
+    <h1>Para Ti ♡</h1>
+    <div class="sub">En este universo, todo es más bonito porque existes tú.</div>
+    <div class="spacer"></div>
+    <div class="glass">
+      <strong>Mi Amor 💛</strong>
+      <p>Entre millones de estrellas, siempre volvería a encontrarte.</p>
+      <button id="open">Toca para comenzar ♡</button>
+    </div>
+  </div>
+</section>
+
+<div id="message">
+  <div class="letter">
+    <div class="icon">🌻</div>
+    <h2>Para mi persona favorita</h2>
+    <p>Quería regalarte un pequeño universo: lleno de luz, flores y momentos bonitos. Gracias por hacer especial mi mundo. Si pudiera elegir entre todas las estrellas, siempre te elegiría a ti. 💛</p>
+    <button class="close" id="close">Volver a la galaxia ✨</button>
+  </div>
+</div>
+
+<script>
+const stars=document.getElementById('stars'),petals=document.getElementById('petals');
+for(let i=0;i<85;i++){let s=document.createElement('i');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.setProperty('--d',(1.2+Math.random()*3)+'s');stars.appendChild(s)}
+for(let i=0;i<18;i++){let p=document.createElement('span');p.className='petal';p.textContent=Math.random()>.45?'🌻':'✨';p.style.left=Math.random()*100+'%';p.style.setProperty('--s',(10+Math.random()*16)+'px');p.style.setProperty('--d',(7+Math.random()*8)+'s');p.style.setProperty('--delay',(-Math.random()*12)+'s');p.style.setProperty('--x',(Math.random()*120-60)+'px');petals.appendChild(p)}
+function burst(x,y,n=18){let a=['✨','💛','🌻'];for(let i=0;i<n;i++){let e=document.createElement('span'),ang=Math.random()*Math.PI*2,d=50+Math.random()*120;e.className='burst';e.textContent=a[i%a.length];e.style.left=x+'px';e.style.top=y+'px';e.style.setProperty('--x',Math.cos(ang)*d+'px');e.style.setProperty('--y',Math.sin(ang)*d+'px');e.style.setProperty('--r',(Math.random()*500-250)+'deg');document.body.appendChild(e);setTimeout(()=>e.remove(),1450)}}
+const msg=document.getElementById('message');
+document.getElementById('open').onclick=e=>{burst(innerWidth/2,innerHeight*.75,25);setTimeout(()=>msg.classList.add('show'),350)}
+document.getElementById('close').onclick=()=>msg.classList.remove('show');
+document.addEventListener('pointerdown',e=>{if(!msg.classList.contains('show'))burst(e.clientX,e.clientY,7)})
+</script>
+</body>
+</html>
